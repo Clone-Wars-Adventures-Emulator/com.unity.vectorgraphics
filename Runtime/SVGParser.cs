@@ -291,6 +291,7 @@ namespace Unity.VectorGraphics
                 if (!supportedChildren.TryGetValue(child.Name, out handler))
                 {
                     System.Diagnostics.Debug.WriteLine("Skipping over unsupported child (" + child.Name + ") of a (" + node.Name + ")");
+                    Debug.LogWarning("Skipping over unsupported child (" + child.Name + ") of a (" + node.Name + ")");
                     docReader.SkipCurrentChildTree(child);
                     continue;
                 }
@@ -1941,7 +1942,7 @@ namespace Unity.VectorGraphics
             while (pos < length && dataURI[pos] != ';' && dataURI[pos] != ',')
                 ++pos;
 
-            var mediaType = dataURI.Substring(startPos, pos-startPos);
+            var mediaType = dataURI.Substring(startPos, pos-startPos).ToLower();
             if (mediaType != "image/png" && mediaType != "image/jpeg")
                 return null;
 
