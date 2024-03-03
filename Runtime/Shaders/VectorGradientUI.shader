@@ -83,6 +83,7 @@
             };
 
             sampler2D _MainTex;
+            // POPULATED BY UNITY IN MAGIC SAUCE
             float4 _MainTex_ST;
             float4 _MainTex_TexelSize;
             fixed4 _Color;

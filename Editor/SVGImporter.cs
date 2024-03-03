@@ -415,7 +415,9 @@ namespace Unity.VectorGraphics.Editor
 
             ctx.AddObjectToAsset("sprite", sprite);
 
-            Material mat = MaterialForSVGSprite(sprite);
+            Material mat = new(MaterialForSVGSprite(sprite)) {
+                name = $"{name}Material"
+            };
 
             var gameObject = new GameObject(name);
             gameObject.transform.name = "transform";
@@ -440,9 +442,16 @@ namespace Unity.VectorGraphics.Editor
 
             SetPhysicsShape(sprite);
 
-            if (sprite.texture != null)
-                ctx.AddObjectToAsset("texAtlas", sprite.texture);
+            if (sprite.texture != null) {
+                var tex = sprite.texture;
+                ctx.AddObjectToAsset("texAtlas", tex);
 
+                float x = 1.0f / tex.width;
+                float y = 1.0f / tex.height;
+                mat.SetTexture("_MainTex", tex);
+            }
+
+            ctx.AddObjectToAsset("material", mat);
             ctx.AddObjectToAsset("svgImage", svgImage);
             ctx.AddObjectToAsset("canvasRenderer", cr);
             ctx.AddObjectToAsset("rectTransform", rt);

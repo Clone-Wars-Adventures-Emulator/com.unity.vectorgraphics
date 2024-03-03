@@ -28,8 +28,7 @@ float RadialAddress(float2 uv, float2 focus)
     return 0.0f;
 }
 
-fixed4 EvaluateGradient(float settingIndex, float2 uv, sampler2D atlas, float2 texelSize)
-{
+fixed4 EvaluateGradient(float settingIndex, float2 uv, sampler2D atlas, float2 texelSize) {
     // Gradient settings are stored in 3 consecutive texels:
     // - texel 0: (float4, 1 byte per float)
     //    x = gradient type (0 = tex/linear, 1 = radial)
@@ -43,10 +42,9 @@ fixed4 EvaluateGradient(float settingIndex, float2 uv, sampler2D atlas, float2 t
     //    xy = size.x
     //    zw = size.y
 
-    float2 settingUV = float2(0.5f, settingIndex+0.5f) * texelSize;
+    float2 settingUV = float2(0.5f, 0.5f + settingIndex) * texelSize;
     fixed4 gradSettings = tex2D(atlas, settingUV);
-    if (gradSettings.x > 0.0f)
-    {
+    if (gradSettings.x > 0.0f) {
         // Radial texture case
         float2 focus = (gradSettings.zw - float2(0.5f, 0.5f)) * 2.0f; // bring focus in the (-1,1) range                    
         uv = float2(RadialAddress(uv, focus), 0.0);
@@ -60,9 +58,9 @@ fixed4 EvaluateGradient(float settingIndex, float2 uv, sampler2D atlas, float2 t
 
     // Adjust UV to atlas position
     float2 nextUV = float2(texelSize.x, 0);
-    float2 pos = (UnpackFloat2(tex2D(atlas, settingUV+nextUV) * 255) + float2(0.5f, 0.5f)) * texelSize;
-    float2 size = UnpackFloat2(tex2D(atlas, settingUV+nextUV*2) * 255) * texelSize;
+    float2 pos = (UnpackFloat2(tex2D(atlas, settingUV + nextUV) * 255) + float2(0.5f, 0.5f)) * texelSize;
+    float2 size = UnpackFloat2(tex2D(atlas, settingUV + nextUV * 2) * 255) * texelSize;
     uv = uv * size + pos;
-
+    
     return tex2D(atlas, uv);
 }

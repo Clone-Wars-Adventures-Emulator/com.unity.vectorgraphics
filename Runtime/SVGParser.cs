@@ -490,8 +490,9 @@ namespace Unity.VectorGraphics
                     var rect = new Shape();
                     VectorUtils.MakeRectangleShape(rect, new Rect(0, 0, textureFill.Texture.width, textureFill.Texture.height));
                     rect.Fill = textureFill;
-                    sceneNode.Shapes = new List<Shape>(1);
-                    sceneNode.Shapes.Add(rect);
+                    sceneNode.Shapes = new List<Shape>(1) {
+                        rect
+                    };
 
                     ParseClipAndMask(node, sceneNode);
                 }
