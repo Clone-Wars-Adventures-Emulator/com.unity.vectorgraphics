@@ -1943,7 +1943,7 @@ namespace Unity.VectorGraphics
             while (pos < length && dataURI[pos] != ';' && dataURI[pos] != ',')
                 ++pos;
 
-            var mediaType = dataURI.Substring(startPos, pos-startPos);
+            var mediaType = dataURI.Substring(startPos, pos-startPos).ToLower();
             if (mediaType != "image/png" && mediaType != "image/jpeg")
                 return null;
 
