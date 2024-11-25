@@ -1,4 +1,4 @@
-﻿Shader "Unlit/VectorUI"
+﻿Shader "Unlit/VectorUIAdditive"
 {
     Properties
     {
@@ -43,7 +43,8 @@
         Lighting Off
         ZWrite Off
         ZTest [unity_GUIZTestMode]
-        Blend One OneMinusSrcAlpha
+        Blend One One
+        BlendOp Add
         ColorMask [_ColorMask]
 
         Pass
