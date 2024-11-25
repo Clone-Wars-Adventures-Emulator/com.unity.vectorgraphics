@@ -338,7 +338,7 @@ namespace Unity.VectorGraphics
         /// <param name="generatePOTTexture">Resize the texture to the next power-of-two</param>
         /// <param name="encodeSettings">Encode the gradient settings inside the texture</param>
         /// <returns>The generated texture atlas</returns>
-        public static TextureAtlas GenerateAtlas(IEnumerable<Geometry> geoms, uint rasterSize, bool generatePOTTexture = true, bool encodeSettings = true)
+        public static TextureAtlas GenerateAtlas(IEnumerable<Geometry> geoms, uint rasterSize, bool generatePOTTexture = true, bool encodeSettings = true, bool linear = true)
         {
             var fills = new Dictionary<IFill, AtlasEntry>();
             int texturedGeomCount = 0;
@@ -431,7 +431,7 @@ namespace Unity.VectorGraphics
                 EncodeSettings(geoms, fills, rawAtlasTex, whiteTexelsScreenPos);
             }
 
-            var atlasTex = new Texture2D(atlasWidth, atlasHeight, TextureFormat.ARGB32, false, true) {
+            var atlasTex = new Texture2D(atlasWidth, atlasHeight, TextureFormat.ARGB32, false, linear) {
                 wrapModeU = TextureWrapMode.Clamp,
                 wrapModeV = TextureWrapMode.Clamp,
                 wrapModeW = TextureWrapMode.Clamp
