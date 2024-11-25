@@ -291,6 +291,7 @@ namespace Unity.VectorGraphics
                 if (!supportedChildren.TryGetValue(child.Name, out handler))
                 {
                     System.Diagnostics.Debug.WriteLine("Skipping over unsupported child (" + child.Name + ") of a (" + node.Name + ")");
+                    Debug.LogWarning("Skipping over unsupported child (" + child.Name + ") of a (" + node.Name + ")");
                     docReader.SkipCurrentChildTree(child);
                     continue;
                 }
@@ -489,8 +490,9 @@ namespace Unity.VectorGraphics
                     var rect = new Shape();
                     VectorUtils.MakeRectangleShape(rect, new Rect(0, 0, textureFill.Texture.width, textureFill.Texture.height));
                     rect.Fill = textureFill;
-                    sceneNode.Shapes = new List<Shape>(1);
-                    sceneNode.Shapes.Add(rect);
+                    sceneNode.Shapes = new List<Shape>(1) {
+                        rect
+                    };
 
                     ParseClipAndMask(node, sceneNode);
                 }
